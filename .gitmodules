@@ -1,0 +1,16 @@
+[submodule "extern/gotm"]
+	path = extern/gotm
+	url = ../../gotm-model/code
+	branch = v6.0
+[submodule "extern/fabm"]
+	path = extern/fabm
+	url = ../../fabm-model/fabm
+	branch = master
+[submodule "extern/parsac"]
+	path = extern/parsac
+	url = ../parsac
+	branch = master
+[submodule "extern/ersem"]
+	path = extern/ersem
+	url = ../../pmlmodelling/ersem
+	branch = master

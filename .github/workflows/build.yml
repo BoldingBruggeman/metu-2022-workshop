@@ -1,0 +1,41 @@
+name: Build
+on: push
+jobs:
+   main:
+      runs-on: ubuntu-latest
+      steps:
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Clone
+        uses: actions/checkout@v2
+        with:
+           submodules: recursive
+      - name: Install conda environment
+        run: |
+          conda env create -f environment.yml
+          conda init bash
+      - name: Compile
+        run: |
+          source ${CONDA}/etc/profile.d/conda.sh
+          conda activate metu-bb
+          source ./install
+      # - name: Run GOTM
+      #   run: |
+      #     source ${CONDA}/etc/profile.d/conda.sh
+      #     conda activate seamless-bb
+      #     cd setups/bats
+      #     gotm
+      #     cd ../L4
+      #     gotm
+      #     cd ../northsea
+      #     gotm
+      # - name: Run parsac
+      #   run: |
+      #     source ${CONDA}/etc/profile.d/conda.sh
+      #     conda activate seamless-bb
+      #     cd parsac
+      #     parsac sensitivity sample northsea_sa.xml northsea_sa.pickle saltelli 4
+      #     parsac sensitivity run --ncpus 2 northsea_sa.pickle
+      #     parsac sensitivity analyze northsea_sa.pickle sobol
