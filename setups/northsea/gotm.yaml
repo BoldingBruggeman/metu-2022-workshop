@@ -243,6 +243,8 @@ fabm:                               # Framework for Aquatic Biogeochemical Model
       surface_drag: false           # surface drag [default=false]
    repair_state: false              # clip state to minimum/maximum boundaries [default=false]
    input:
+      mole_fraction_of_carbon_dioxide_in_air: 414.
+      absorption_of_silt: 0.07
 eq_state:                           # equation of state
    method: jackett                  # method [unesco, jackett=Jackett et al. (2005); default=jackett]
    form: full                       # formulation [full, full-pot=full with buoyancy frequency based on surface pressure, linear=linearized at T0,S0,p0, linear_custom=linearized at T0,S0,p0,dtr0,dsr0; default=full]
