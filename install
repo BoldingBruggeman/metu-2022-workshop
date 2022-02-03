@@ -18,7 +18,7 @@ rm -rf ${WORK_DIR}
 # Build gotm-fabm
 WORK_DIR=`mktemp -d`
 cd ${WORK_DIR}
-cmake ${REPO_DIR}/extern/gotm $FABM_ARGS   #-DFABM_BASE=${REPO_DIR}/extern/fabm 
+cmake ${REPO_DIR}/extern/gotm -DFABM_BASE=${REPO_DIR}/extern/fabm $FABM_ARGS
 make -j4
 cp -v gotm ~/.local/bin/
 cd -
