@@ -20,6 +20,7 @@ WORK_DIR=`mktemp -d`
 cd ${WORK_DIR}
 cmake ${REPO_DIR}/extern/gotm -DFABM_BASE=${REPO_DIR}/extern/fabm $FABM_ARGS
 make -j4
+mkdir -p ~/.local/bin/
 cp -v gotm ~/.local/bin/
 cd -
 rm -rf ${WORK_DIR}
