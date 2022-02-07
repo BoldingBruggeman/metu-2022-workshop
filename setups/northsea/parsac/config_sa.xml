@@ -6,6 +6,8 @@
   <executable path="/home/kb/.local/bin/gotm"/>
   <setup path="../"/>
   <parameters>
+	  <parameter file="gotm.yaml" variable="surface/fluxes/heat/scale_factor" minimum="0.8" maximum="1.2" />
+	  <parameter file="gotm.yaml" variable="surface/swr/scale_factor"  minimum="0.8" maximum="1.2" />
     <parameter file="gotm.yaml" variable="surface/u10/scale_factor" minimum="0.8" maximum="1.2"/>
     <parameter file="gotm.yaml" variable="surface/v10/scale_factor" minimum="0.8" maximum="1.2"/>
     <parameter file="gotm.yaml" variable="turbulence/turb_param/k_min" minimum="1e-9" maximum="1e-4" logscale="True" />
