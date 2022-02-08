@@ -1,1 +1,4 @@
+*.cache
+*.db
 *.pkl
+*.ppjob
