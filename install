@@ -7,22 +7,18 @@ REPO_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # Add additional FABM "institutes" (bfm, ecosmo, etc.) and their base directory on the line below.
 FABM_ARGS="-DFABM_ERSEM_BASE=${REPO_DIR}/extern/ersem -DCMAKE_Fortran_COMPILER=gfortran"
 
+cd ${REPO_DIR}
+
 # Build pyfabm
-WORK_DIR=`mktemp -d`
-cd ${WORK_DIR}
+mkdir -p build/pyfabm
+cd build/pyfabm
 cmake ${REPO_DIR}/extern/fabm/src/drivers/python $FABM_ARGS
 make -j4 install
-cd -
-rm -rf ${WORK_DIR}
+cd ../..
 
 # Build gotm-fabm
-WORK_DIR=`mktemp -d`
-cd ${WORK_DIR}
-cmake ${REPO_DIR}/extern/gotm -DFABM_BASE=${REPO_DIR}/extern/fabm $FABM_ARGS
-make -j4
-mkdir -p ~/.local/bin/
-cp -v gotm ~/.local/bin/
-cd -
-rm -rf ${WORK_DIR}
-
+mkdir -p build/gotm
+cd build/gotm
+cmake ${REPO_DIR}/extern/gotm -DFABM_BASE=${REPO_DIR}/extern/fabm -DCMAKE_INSTALL_PREFIX=~/.local $FABM_ARGS
+make -j4 install
 cd ../..
