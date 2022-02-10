@@ -1,0 +1,894 @@
+check_conservation: false
+require_initialization: true
+instances:
+  light:
+    model: ersem/light
+    parameters:
+      EPS0r: 0.079
+      pEIR_eow: 0.5
+  N1:
+    long_name: phosphate
+    model: ersem/pelagic_base_redox
+    parameters:
+      composition: p                                      # elemental composition
+      c0: 0.00001                                           # background carbon concentration (mg C/m^3), default = 0.0
+    initialization:
+      p: 0.4                                              # phosphorus (mmol P/m^3)f
+  N2:
+    long_name: nitrite
+    model: ersem/pelagic_base_redox
+    parameters:
+      composition: n                                      # elemental composition
+      c0: 0.00001                                         # background carbon concentration (mg C/m^3), default = 0.0
+    initialization:
+      n: 0.1                                              # nitrogen (mmol N/m^3)
+  N3:
+    long_name: nitrate
+    model: ersem/pelagic_base_redox
+    parameters:
+      composition: n                                      # elemental composition
+      c0: 0.00001                                           # background carbon concentration (mg C/m^3), default = 0.0
+    initialization:
+      n: 8.0                                              # nitrogen (mmol N/m^3)
+  N4:
+    long_name: ammonium
+    model: ersem/pelagic_base_redox
+    parameters:
+      composition: n                                      # elemental composition
+      c0: 0.00001                                           # background carbon concentration (mg C/m^3), default = 0.0
+    initialization:
+      n: 0.1                                              # nitrogen (mmol N/m^3)
+  N5:
+    long_name: silicate
+    model: ersem/pelagic_base_redox
+    parameters:
+      composition: s                                      # elemental composition
+      s0: 0.0003                                          # background silicon concentration (mmol Si/m^3), default = 0.0
+    initialization:
+      s: 4.5                                              # silicate (mmol Si/m^3)
+  O2:
+    long_name: oxygen
+    model: ersem/oxygen
+    parameters:
+      iswO2: 2                                            # saturation formulation (1: legacy ERSEM, 2: Weiss 1970, 3: Nightingale et al. 2000, 4: Wanninkhof 2014)
+    initialization:
+      o: 300.0                                            # oxygen (mmol O_2/m^3)
+  O3:
+    long_name: carbonate
+    model: ersem/carbonate
+    parameters:
+      iswCO2: 1                                           # carbonate system diagnostics (0: off, 1: on), default = 1
+      iswASFLUX: 1                                        # air-sea CO2 exchange (0: none, 1: Nightingale et al. 2000, 2: Wanninkhof 1992 without chemical enhancement, 3: Wanninkhof 1992 with chemical enhancement, 4: Wanninkhof and McGillis 1999, 5: Wanninkhof 1992 switching to Wanninkhof and McGillis 1999, 6: Wan, default = 6
+      iswtalk: 2                                          # alkalinity formulation (1-4: from salinity and temperature, 5: dynamic alkalinity), default = 5
+      pHscale: 1                                          # pH scale (1: total, 0: SWS, -1: SWS backward compatible), default = 1
+      iswbioalk: 1                                        # use bioalkalinity (0: off, 1: on), default = 1
+    initialization:
+      c: 2130.0                                           # total dissolved inorganic carbon (mmol C/m^3)
+  S1:
+    long_name: hydrogen sulfide
+    model: ersem/pelagic_base_redox
+    parameters:
+      composition: u                                      # elemental composition
+    initialization:
+      u: 1.0                                              # sulfur (mmol S/m^3)
+  S2:
+    long_name: elemental sulfur
+    model: ersem/pelagic_base_redox
+    parameters:
+      composition: u                                      # elemental composition
+    initialization:
+      u: 0.001                                              # sulfur (mmol S/m^3)
+  S3:
+    long_name: sulfate
+    model: ersem/pelagic_base_redox
+    parameters:
+      composition: u                                      # elemental composition
+    initialization:
+      u: 25000.0                                              # sulfur (mmol S/m^3)
+  S4:
+    long_name: thiosulfate
+    model: ersem/pelagic_base_redox
+    parameters:
+      composition: u                                      # elemental composition
+    initialization:
+      u: 0.001                                              # sulfur (mmol S/m^3)
+  M2:
+    long_name: bivalent manganese
+    model: ersem/pelagic_base_redox
+    parameters:
+      composition: m                                      # elemental composition
+    initialization:
+      m: 0.0001                                            # Manganese (mmol Mn/m^3)
+  M3:
+    long_name: trivalent manganese
+    model: ersem/pelagic_base_redox
+    parameters:
+      composition: m                                      # elemental composition
+    initialization:
+      m: 0.0001                                            # Manganese (mmol Mn/m^3)
+  M4:
+    long_name: quadrivalent manganese
+    model: ersem/pelagic_base_redox
+    parameters:
+      composition: m                                      # elemental composition
+      rm: 0.0 
+      rx: 18.0
+      rh: 1.0
+      ndeposition: 0
+    initialization:
+      m: 0.0001                                            # Manganese (mmol Mn/m^3)
+  F2:
+    long_name: bivalent iron
+    model: ersem/pelagic_base_redox
+    parameters:
+      composition: f                                      # elemental composition
+    initialization:
+      f: 0.0001                                             # Iron (mmol Fe/m^3)
+  F3:
+    long_name: trivalent iron
+    model: ersem/pelagic_base_redox
+    parameters:
+      composition: f                                      # elemental composition
+      rm: 0.0 
+      rx: 18.0
+      rh: 1.0
+      ndeposition: 0
+    initialization:
+      f: 1e-6                                             # Iron (mmol Fe/m^3)
+  R1:
+    long_name: labile dissolved organic matter
+    model: ersem/pelagic_base_redox
+    parameters:
+      composition: cnp                                    # elemental composition
+      c0: 0.0034                                          # background carbon concentration (mg C/m^3), default = 0.0
+      EPS: 0.00001                                         # specific shortwave attenuation (m^2/mg C)
+    initialization:
+      c: 0.001                                             # carbon (mg C/m^3)
+      n: 0.001                                             # nitrogen (mmol N/m^3)
+      p: 0.001                                             # phosphorus (mmol P/m^3)
+  R2:
+    long_name: semi-labile dissolved organic matter
+    model: ersem/pelagic_base_redox
+    parameters:
+      composition: c                                      # elemental composition
+      c0: 0.0033                                          # background carbon concentration (mg C/m^3), default = 0.0
+      EPS: 0.0001                                         # specific shortwave attenuation (m^2/mg C)
+    initialization:
+      c: 0.001                                             # carbon (mg C/m^3)
+  R3:
+    long_name: semi-refractory dissolved organic matter
+    model: ersem/pelagic_base_redox
+    parameters:
+      composition: c                                      # elemental composition
+      c0: 0.0033                                          # background carbon concentration (mg C/m^3), default = 0.0
+      EPS: 0.0003                                        # specific shortwave attenuation (m^2/mg C)
+    initialization:
+      c: 0.001                                             # carbon (mg C/m^3)
+  R4:
+    long_name: small-size pom
+    model: ersem/pelagic_base_redox
+    parameters:
+      composition: cnpf                                   # elemental composition
+      c0: 0.0033                                          # background carbon concentration (mg C/m^3), default = 0.0
+      EPS: 0.0002                                         # specific shortwave attenuation (m^2/mg C)
+      rm: 8.0                                             # sinking velocity (m/d), default = 0.0
+      ndeposition: 0                                      # number of target pools for sedimentation, default = 1
+    initialization:
+      c: 0.001                                              # carbon (mg C/m^3)
+      n: 0.001                                              # nitrogen (mmol N/m^3)
+      p: 0.001                                            # phosphorus (mmol P/m^3)
+      f: 0.00001                                            # iron (umol Fe/m^3)
+  R6:
+    long_name: medium-size pom
+    model: ersem/pelagic_base_redox
+    parameters:
+      composition: cnpsf                                  # elemental composition
+      c0: 0.0033                                          # background carbon concentration (mg C/m^3), default = 0.0
+      EPS: 0.0001                                         # specific shortwave attenuation (m^2/mg C)
+      rm: 10.0                                             # sinking velocity (m/d), default = 0.0
+      ndeposition: 0                                      # number of target pools for sedimentation, default = 1
+    initialization:
+      c: 0.001                                             # carbon (mg C/m^3)
+      n: 0.001                                             # nitrogen (mmol N/m^3)
+      p: 0.001                                             # phosphorus (mmol P/m^3)
+      s: 0.001                                              # silicate (mmol Si/m^3)
+      f: 0.001                                            # iron (umol Fe/m^3)
+  R8:
+    long_name: large-size pom
+    model: ersem/pelagic_base_redox
+    parameters:
+      composition: cnps                                   # elemental composition
+      c0: 0.0033                                          # background carbon concentration (mg C/m^3), default = 0.0
+      EPS: 0.0001                                         # specific shortwave attenuation (m^2/mg C)
+      rm: 15.0                                             # sinking velocity (m/d), default = 0.0
+      ndeposition: 0                                      # number of target pools for sedimentation, default = 1 
+    initialization:
+      c: 0.001                                             # carbon (mg C/m^3)
+      n: 0.001                                            # nitrogen (mmol N/m^3)
+      p: 0.001                                            # phosphorus (mmol P/m^3)
+      s: 0.001                                            # silicate (mmol Si/m^3)
+  B1:
+    long_name: bacteria
+    model: ersem/bacteria_docdyn_o2
+    parameters:
+      iswBlim: 2                                          # nutrient limitation (1: minimum of inorganic and organic availability, 2: additive availability)
+      q10: 2.0                                            # Q_10 temperature coefficient (-)
+      chdo: 2.0                                           # Michaelis-Menten constant for oxygen limitation (-)
+      o2oxl: 0.0                                          # Oxygen concentration below with bacterial growth stops (mmol O/m^3)
+      chn: 0.5                                            # Michaelis-Menten constant for nitrate limitation (mmol N/m^3)
+      chp: 0.1                                            # Michaelis-Menten constant for phosphate limitation (mmol P/m^3)
+      sdo2: 1.0                                           # Oxygen concentration above which the mortality rate is sd1 (mmol O/m^3)
+      sd1: 0.02                                           # specific mortality at reference temperature above oxygen concentration o2oxl (1/d)
+      sd2: 0.99                                           # specific mortality at reference temperature below oxygen concentration o2oxl (1/d)
+      sum: 2.5                                            # maximum specific uptake at reference temperature (1/d)
+      pu: 0.6                                             # efficiency at high oxygen levels (-)
+      srs: 0.1                                            # specific rest respiration at reference temperature (1/d)
+      sR1: 0.3                                            # maximum turn-over rate of DOM (1/d), default = 1.0
+      qpc: 0.0019                                         # maximum phosphorus to carbon ratio (mmol P/mg C)
+      qnc: 0.0167                                         # maximum nitrogen to carbon ratio (mmol N/mg C)
+      ur_O2: 0.083                                        # oxygen consumed per carbon respired (mmol O_2/mg C)
+      sR1N1: 0.0                                          # mineralisation rate of labile dissolved organic phosphorus (1/d)
+      sR1N4: 0.0                                          # mineralisation rate of labile dissolved organic nitrogen (1/d)
+      fsink: 0.0                                          # scavenging rate for iron (1/d)
+      c0: 1e-5                                            # background carbon concentration (mg C/m^3)
+      nRP: 3                                              # number of substrates, default = 0
+      sRP1R1: 0.5                                         # remineralisation of substrate 1 to DOM (1/d)
+      sRP2R1: 0.3                                        # remineralisation of substrate 2 to DOM (1/d)
+      sRP3R1: 0.15                                       # remineralisation of substrate 3 to DOM (1/d)
+      rR2: 0.1                                            # fraction of semi-labile DOC available to bacteria (-)
+      rR3: 0.02                                           # fraction of semi-refractory DOC available to bacteria (-)
+      frR3: 0.3                                           # fraction of activity respiration converted to semi-refractory DOC (-)
+    initialization:
+      c: 0.0001                                           # carbon (mg C/m^3)
+      n: 0.0001                                           # nitrogen (mmol N/m^3)
+      p: 0.0001                                           # phosphorus (mmol P/m^3)
+    coupling:
+      RP1: R4
+      RP2: R6
+      RP3: R8
+      N1p: N1/p                                           # phosphate (mmol P/m^3)
+      N4n: N4/n                                           # ammonium (mmol N/m^3)
+      N7f: F3/f                                           # iron (umol Fe/m^3)
+      R1c: R1/c                                           # labile dissolved organic carbon (mg C/m^3)
+      R1p: R1/p                                           # labile dissolved organic phosphorus (mmol P/m^3)
+      R1n: R1/n                                           # labile dissolved organic nitrogen (mmol N/m^3)
+      R2c: R2/c                                           # semi-labile dissolved organic carbon (mg C/m^3)
+      R3c: R3/c                                           # semi-refractory DOC (mg C/m^3)
+      O3c: O3/c                                           # carbon dioxide (mmol C/m^3)
+      O2o: O2/o                                           # oxygen (mmol O_2/m^3)
+  B2:
+    long_name: bacteria
+    model: ersem/bacteria_docdyn_nh
+    parameters:
+      q10: 2.0                                            # Q_10 temperature coefficient (-)
+      lo2_no3red: 25.0                                    # Oxygen limit for nitrate reduction (mmol O_2/m^3)
+      hno3_no3red: 0.001                                  # Half-saturation constant for nitrate in nitrate reduction (mmol N/m^3)
+      k_no3red: 0.12                                      # Specific nitrate reduction rate (1/d)
+      lo2_no2red: 25.0                                    # Oxygen limit for nitrite reduction (mmol O_2/m^3)
+      hno2_no2red: 0.0001                                 # Half-saturation constant for nitrite in nitrite reduction (mmol N/m^3)
+      k_no2red: 0.20                                      # Specific nitrite reduction rate (1/d)   
+      lo2_so4red: 25.0                                    # Oxygen limit for sulfate reduction (mmol O_2/m^3)
+      lno_so4red: 0.5                                     # Nitrogen limit for sulfate reduction (mmol N/m^3)
+      k_so4red: 2.5e-7                                    # Specific sulfate reduction rate (1/d)
+      lo2_s2o3red: 25.0                                   # Oxygen limit for thiosulfate reduction (mmol O_2/m^3)
+      lno_s2o3red: 0.5                                    # Nitrogen limit for thiosulfate reduction (mmol N/m^3)
+      k_s2o3red: 1.2                                      # Specific thiosulfate reduction rate (1/d)
+      lo2_fe3red: 10.0                                    # Oxygen limit for trivalent iron reduction (mmol O_2/m^3)
+      k_fe3red: 5.0e-5                                    # Specific trivalent iron reduction rate (1/d)
+      lo2_mn4red: 10.0                                    # Oxygen limit for quadrivalent manganese reduction (mmol O_2/m^3)
+      hmn4_mn4red: 0.5                                    # Half-saturation constant for quadrivalent manganese in quadrivalent manganese reduction (mmol Mn/m^3)
+      k_mn4red: 0.001                                     # Specific quadrivalent manganese reduction rate (1/d)
+      sdo2: 1.0                                           # Oxygen concentration above which the mortality rate is sd1 (mmol O_2/m^3)
+      sd1: 0.01                                           # specific mortality at reference temperature above oxygen concentration o2oxl (1/d)
+      sd2: 0.01                                           # specific mortality at reference temperature below oxygen concentration o2oxl (1/d)
+      sR1: 1.0                                            # maximum turn-over rate of DOM (1/d)
+      sumB2_no3red: 2.0                                   # maximum specific uptake at reference temperature for nitrate reduction (1/d)
+      sumB2_no2red: 2.0                                   # maximum specific uptake at reference temperature for nitrite reduction (1/d)
+      sumB2_so4red: 2.0                                   # maximum specific uptake at reference temperature for sulfate reduction (1/d)
+      sumB2_s2o3red: 2.0                                  # maximum specific uptake at reference temperature for thiosulfate reduction (1/d)
+      sumB2_fe3red: 2.0                                   # maximum specific uptake at reference temperature for trivalent iron reduction (1/d)
+      sumB2_mn4red: 2.0                                   # maximum specific uptake at reference temperature for quadrivalent manganese reduction (1/d)
+      rR2: 0.1                                            # fraction of semi-labile DOC available to bacteria (-)
+      rR3: 0.02                                           # fraction of semi-refractory DOC available to bacteria (-)
+      nRP: 3                                              # number of substrates, default = 0
+      sRP1R1: 0.5                                         # remineralisation of substrate 1 to DOM (1/d)
+      sRP2R1: 0.3                                        # remineralisation of substrate 2 to DOM (1/d)
+      sRP3R1: 0.15                                       # remineralisation of substrate 3 to DOM (1/d)
+      pu_no3red: 0.6                                      # efficiency of assimilation for nitrate reduction (-)
+      pu_no2red: 0.6                                      # efficiency of assimilation for nitrite reduction (-)
+      pu_so4red: 0.6                                      # efficiency of assimilation for sulfate reduction (-)
+      pu_s2o3red: 0.6                                     # efficiency of assimilation for thiosulfate reduction (-)
+      pu_fe3red: 0.6                                      # efficiency of assimilation for trivalent iron reduction (-)
+      pu_mn4red: 0.6                                      # efficiency of assimilation for quadrivalent manganese reduction (-)
+      srs: 0.01                                           # specific rest electron acceptor reduction rate at reference temperature (1/d)
+      qpc: 0.0019                                         # maximum phosphorus to carbon ratio (mmol P/mg C)
+      qnc: 0.0167                                         # maximum nitrogen to carbon ratio (mmol N/mg C)
+      frR3: 0.3                                           # fraction of activity respiration converted to semi-refractory DOC (-)
+      urB2_no3: 0.167                                     # nitrate reduced per carbon used in nitrate reduction (mmol N/mg C)
+      urB2_no2: 0.111                                     # nitrite reduced per carbon used in nitrite reduction (mmol N/mg C)
+      urB2_so4: 0.042                                     # sulfate consumed per carbon used in sulfate reduction (mmol S/mg C)
+      urB2_s2o3: 0.042                                    # thiosulfate consumed per carbon used in thiosufate reduction (mmol S/mg C)
+      urB2_fe3: 0.042                                     # bivalent iron consumed per carbon used in bivalent iron reduction (mmol Mn/mg C)
+      urB2_mn4: 0.042                                     # quadrivalent manganese consumed per carbon used in quadrivalent manganese reduction (mmol Mn/mg C
+      chn: 0.5                                            # Michaelis-Menten constant for nitrogen limitation (mmol N/m^3)
+      chp: 0.1                                            # Michaelis-Menten constant for phosphate limitation (mmol P/m^3)
+      c0: 1e-5                                            # background carbon concentration (mg C/m^3)
+      sR1N1: 0.0                                          # mineralisation rate of labile dissolved organic phosphorus (1/d)
+      sR1N4: 0.0                                          # mineralisation rate of labile dissolved organic nitrogen (1/d)
+      fsink: 0.0                                          # scavenging rate for iron (1/d)
+    initialization:
+      c: 15.7                                             # carbon (mg C/m^3)
+      n: 0.26                                             # nitrogen (mmol N/m^3)
+      p: 0.029                                            # phosphorus (mmol P/m^3)
+    coupling:
+      RP1: R4
+      RP2: R6
+      RP3: R8
+      N1p: N1/p                                           # phosphate (mmol P/m^3)
+      N2n: N2/n                                           # nitrite (mmol N/m^3)
+      N3n: N3/n                                           # nitrate (mmol N/m^3)
+      N4n: N4/n                                           # ammonium (mmol N/m^3)
+      S1u: S1/u                                           # hydrogen sulfie (mmol S/m^3)
+      S3u: S3/u                                           # sulfate (mmol S/m^3)
+      S4u: S4/u                                           # thiosulfate (mmol S/m^3)
+      F2f: F2/f                                           # bivalent iron (umol Fe/m^3)
+      F3f: F3/f                                           # trivalent iron (umol Fe/m^3)
+      M2m: M2/m                                           # bivalent manganese (umol Mn/m^3)
+      M4m: M4/m                                           # quadrivalent manganese (umol Mn/m^3)
+      R1c: R1/c                                           # labile dissolved organic carbon (mg C/m^3)
+      R1p: R1/p                                           # labile dissolved organic phosphorus (mmol P/m^3)
+      R1n: R1/n                                           # labile dissolved organic nitrogen (mmol N/m^3)
+      R2c: R2/c                                           # semi-labile dissolved organic carbon (mg C/m^3)
+      R3c: R3/c                                           # semi-refractory DOC (mg C/m^3)
+      O2o: O2/o                                           # oxygen (mmol O_2/m^3)
+  AAB:
+    long_name: aerobic autotrophic bacteria
+    model: ersem/bacteria_aa
+    parameters:
+      q10: 2.0                                            # Q_10 temperature coefficient (-)
+      ISWph: 1                                            # pH impact on nitrification (0: off, 1: on)
+      kn4n2: 0.9                                          # specific nitrification rate - ammonium to nitrite (1/d)
+      kn2n3: 2.5                                          # specific nitrification rate - nitrite to nitrate (1/d)
+      chN3o: 1.0                                          # half-saturation constant for oxygen in nitrification (mmol O_2/m^3)
+      o2chN2o: 1.0                                        # oxygen limit for the first step of nitrification (mmol O_2/m^3)
+      o2chN3o: 1.0                                        # oxygen limit for the second step of nitrification (mmol O_2/m^3)
+      ks0ox: 4.0                                          # specific rate of the oxidation of elemental sulfur (1/d)
+      khsox: 0.2                                          # specific rate of the oxidation of hydrogen sulfide (1/d)
+      ks23ox: 1.5                                         # specific rate of the oxidation of thiosulfate (1/d)
+      kmn2ox: 0.1                                         # specific rate of the oxidation of bivalent manganese (1/d)
+      mnmn2ox: 0.01                                       # manganese limit for the oxidation of bivalent manganese (mmol Mn/m^3)
+      o2mn2ox: 2.0                                        # half-saturation constant for oxygen in the oxidation of bivalent manganese (mmol O_2/m^3)
+      kmn3ox: 0.2                                         # specific rate of the oxidation of trivalent manganese (1/d)
+      mnmn3ox: 0.01                                       # manganese limit for the oxidation of trivalent manganese (mmol Mn/m^3)
+      o2mn3ox: 2.0                                        # half-saturation constant for oxygen in the oxidation of trivalent manganese (mmol O_2/m^3)
+      kfeox: 0.5                                          # specific rate of the oxidation of bivalent iron (1/d)
+      fefeox: 0.001                                       # iron limit for the oxidation of bivalent iron (mmol Fe/m^3)
+    coupling:
+      N2n: N2/n                                           # nitrite (mmol N/m^3)
+      N3n: N3/n                                           # nitrate (mmol N/m^3)
+      N4n: N4/n                                           # ammonium (mmol N/m^3)
+      S1u: S1/u                                           # hydrogen sulfide (mmol S/m^3)
+      S2u: S2/u                                           # elemental fulfur (mmol S/m^3)
+      S3u: S3/u                                           # sulfate (mmol S/m^3)
+      S4u: S4/u                                           # thiosulfate (mmol S/m^3)
+      M2m: M2/m                                           # bivalent mangnese (mmol Mn/m^3)
+      M3m: M3/m                                           # trivalent mangnese (mmol Mn/m^3)
+      M4m: M4/m                                           # quadrivalent mangnese (mmol Mn/m^3)
+      F2f: F2/f                                           # bivalent iron (mmol Fe/m^3)
+      F3f: F3/f                                           # trivalent iron (mmol Fe/m^3)
+      O2o: O2/o                                           # oxygen (mmol O_2/m^3)
+  NAB:
+    long_name: anaerobic autotrophic bacteria
+    model: ersem/bacteria_na
+    parameters:
+      q10: 2.0                                            # Q_10 temperature coefficient
+      kannam: 0.03                                        # Specific rate for annamox (1/d)
+      o2annam: 10.0                                       # Oxygen threshold for annamox (mmol O_2/m^3)
+      kt: 0.12                                            # Specific rate for the first step of chemolithotropic denitrification (1/d)
+      kt2: 0.2                                            # Specific rate for the second step of chemolithotropic denitrification (1/d)
+      kdisp: 0.01                                         # Specific rate for sulfur disproportionation (1/d)
+      kfemox: 1.0                                         # Specific rate for the oxidation of iron with manganese (1/d)
+      fefemox: 0.001                                      # FeII threshold for the oxidation of iron with manganese (mmol Fe/m^3)
+      kfenox: 5.0                                         # Specific rate for the oxidation of iron with nitrate (1/d)
+      fefenox: 0.001                                      # FeII threshold for the oxidation of iron with nitrate (mmol Fe/m^3)
+      kferd: 0.05                                         # Specific rate for the reduction of iron by hydrogen sulfide (1/d)
+      kmnrd: 20.0                                         # Specific rate for the first step the reduction of manganese by hydrogen sulfide (1/d)
+      mnmnrd: 0.01                                        # MnIV threshold for the first step the reduction of manganese by hydrogen sulfide (mmol Mn/m^3)
+      hsmnrd: 1.0                                         # hydrogen sulfide half-saturation constant for the first step the reduction of manganese by hydrogen sulfide (mmol S/m^3)
+      kmnrd2: 1.0                                         # Specific rate for the second step the reduction of manganese by hydrogen sulfide (1/d)
+      mnmnrd2: 0.01                                       # MnIII threshold for the first step the reduction of manganese by hydrogen sulfide (mmol Mn/m^3)
+      hsmnrd2: 1.0                                        # hydrogen sulfide half-saturation constant for the second step the reduction of manganese by hydrogen sulfide (mmol S/m^3)
+      kmn2ox: 0.1                                         # specific rate of the oxidation of bivalent manganese (1/d)
+      mnmn2ox: 0.01                                       # manganese limit for the oxidation of bivalent manganese (mmol Mn/m^3)
+      o2mn2ox: 2.0                                        # half-saturation constant for oxygen in the oxidation of bivalent manganese (mmol O_2/m^3)
+      kmn3ox: 0.2                                         # specific rate of the oxidation of trivalent manganese (1/d)
+      mnmn3ox: 0.01                                       # manganese limit for the oxidation of trivalent manganese (mmol Mn/m^3)
+      o2mn3ox: 2.0                                        # half-saturation constant for oxygen in the oxidation of trivalent manganese (mmol O_2/m^3)
+      kfeox: 0.5                                          # specific rate of the oxidation of bivalent iron (1/d)
+      fefeox: 0.001                                       # iron limit for the oxidation of bivalent iron (mmol Fe/m^3)
+    coupling:
+      N1p: N1/p                                           # phosphate (mmol P/m^3)
+      N2n: N2/n                                           # nitrite (mmol N/m^3)
+      N3n: N3/n                                           # nitrate (mmol N/m^3)
+      N4n: N4/n                                           # ammonium (mmol N/m^3)
+      S1u: S1/u                                           # hydrogen sulfide (mmol S/m^3)
+      S2u: S2/u                                           # elemental fulfur (mmol S/m^3)
+      S3u: S3/u                                           # sulfate (mmol S/m^3)
+      S4u: S4/u                                           # thiosulfate (mmol S/m^3)
+      M2m: M2/m                                           # bivalent mangnese (mmol Mn/m^3)
+      M3m: M3/m                                           # trivalent mangnese (mmol Mn/m^3)
+      M4m: M4/m                                           # quadrivalent mangnese (mmol Mn/m^3)
+      F2f: F2/f                                           # bivalent iron (mmol Fe/m^3)
+      F3f: F3/f                                           # trivalent iron (mmol Fe/m^3)
+      O2o: O2/o                                           # oxygen (mmol O_2/m^3)
+  P1:
+    long_name: diatoms
+    model: ersem/primary_producer_redox
+    parameters:
+      sum: 1.408                                           # maximum specific productivity at reference temperature (1/d)
+      q10: 2.0                                            # Q_10 temperature coefficient (-)
+      srs: 0.04                                           # specific rest respiration at reference temperature (1/d)
+      pu_ea: 0.2                                          # excreted fraction of primary production (-)
+      pu_ra: 0.2                                          # respired fraction of primary production (-)
+      qnlc: 0.0042                                        # minimum nitrogen to carbon ratio (mmol N/mg C)
+      qplc: 0.0001                                        # minimum phosphorus to carbon ratio (mmol P/mg C)
+      qflc: 5.00E-08                                      # minimum iron to carbon ratio (mmol Fe/mg C)
+      qfRc: 5.00E-07                                      # maximum/optimal iron to carbon ratio (mmol Fe/mg C)
+      qurf: 3.00E-04                                      # specific affinity for iron (m^3/mg C/d)
+      xqcp: 1.0                                           # threshold for phosphorus limitation (relative to Redfield ratio) (-)
+      xqcn: 1.0                                           # threshold for nitrogen limitation (relative to Redfield ratio) (-)
+      xqp: 2.0                                            # maximum phosphorus to carbon ratio (relative to Redfield ratio) (-)
+      xqn: 1.08                                           # maximum nitrogen to carbon ratio (relative to Redfield ratio) (-)
+      qun2: 0.015                                          # nitrite affinity (m^3/mg C/d)
+      qun3: 0.015                                          # nitrate affinity (m^3/mg C/d)
+      qun4: 0.015                                          # ammonium affinity (m^3/mg C/d)
+      qurp: 0.017                                         # phosphate affinity (m^3/mg C/d)
+      snplux: 1.0                                         # specific tendency of luxury uptake of nutrients towards maximum quota (1/d), default = 1.0
+      use_Si: true                                        # use silicate, default = false
+      qsc: 0.005                                          # maximum silicate to carbon ratio (mmol Si/mg C)
+      chs: 0.1                                            # Michaelis-Menten constant for silicate limitation (mmol/m^3)
+      sdo: 0.06                                           # 1.1 of minimal specific lysis rate (1/d)
+      alpha: 3.0                                          # initial slope of PI-curve (mg C m^2/mg Chl/W/d)
+      beta: 0.02                                         # photoinhibition parameter (mg C m^2/mg Chl/W/d)
+      phim: 0.06                                          # maximum effective chlorophyll to carbon photosynthesis ratio (mg Chl/mg C)
+      Limnut: 1                                           # nitrogen-phosphorus colimitation formulation (0: geometric mean, 1: minimum, 2: harmonic mean)
+      docdyn: true                                        # use dynamic ratio of labile to semi-labile DOM production, default = false
+      uB1c_O2: 0.11                                       # oxygen produced per unit of carbon fixed (mmol O_2/mg C)
+      urB1_O2: 0.1                                        # oxygen consumed per unit of carbon respired (mmol O_2/mg C)
+      c0: 0.0001                                          # background carbon concentration (mg C/m^3), default = 0.0
+      resm: 7.0                                           # maximum nutrient-limitation-induced sinking velocity (m/d), default = 0.0
+      esni: 0.5                                           # level of nutrient limitation below which sinking commences (-)
+      cenh: false                                         # enable atmospheric CO2 influence on photosynthesis, default = false
+      EPS: 0.0005                                         # specific shortwave attenuation (m^2/mg C) 
+      ndeposition: 0                                      # number of target pools for sedimentation, default = 1
+    initialization:
+      c: 0.0001                                           # carbon (mg C/m^3)
+      n: 0.0001                                           # nitrogen (mmol N/m^3)
+      p: 0.0001                                           # phosphorus (mmol P/m^3)
+      s: 0.0001                                           # silicate (mmol Si/m^3)
+      f: 0.0001                                           # iron (umol Fe/m^3)
+      Chl: 0.4                                            # chlorophyll a (mg/m^3)
+    coupling:
+      RP: R6
+      N1p: N1/p                                           # phosphate (mmol P/m^3)
+      N2n: N2/n                                           # nitrite (mmol N/m^3)
+      N3n: N3/n                                           # nitrate (mmol N/m^3)
+      N4n: N4/n                                           # ammonium (mmol N/m^3)
+      N5s: N5/s                                           # silicate (mmol Si/m^3)
+      F2f: F2/f                                           # bivalent iron (mmol Fe/m^3)
+      F3f: F3/f                                           # trivalent iron (mmol Fe/m^3)
+      R1c: R1/c                                           # dissolved organic carbon (mg C/m^3)
+      R1p: R1/p                                           # dissolved organic phosphorus (mmol P/m^3)
+      R1n: R1/n                                           # dissolved organic nitrogen (mmol N/m^3)
+      R2c: R2/c                                           # semi-labile dissolved organic carbon (mg C/m^3)
+      O2o: O2/o                                           # oxygen (mmol O_2/m^3)
+      O3c: O3/c                                           # carbon dioxide (mmol C/m^3)
+  P2:
+    long_name: nanophytoplankton
+    model: ersem/primary_producer_redox
+    parameters:
+      sum: 3.0                                           # maximum specific productivity at reference temperature (1/d)
+      q10: 2.0                                            # Q_10 temperature coefficient (-)
+      srs: 0.04                                           # specific rest respiration at reference temperature (1/d)
+      pu_ea: 0.2                                          # excreted fraction of primary production (-)
+      pu_ra: 0.2                                          # respired fraction of primary production (-)
+      qnlc: 0.005                                         # minimum nitrogen to carbon ratio (mmol N/mg C)
+      qplc: 0.000225                                      # minimum phosphorus to carbon ratio (mmol P/mg C)
+      qflc: 1.50E-07                                      # minimum iron to carbon ratio (mmol Fe/mg C)
+      qfRc: 3.00E-07                                      # maximum/optimal iron to carbon ratio (mmol Fe/mg C)
+      qurf: 4.00E-04                                      # specific affinity for iron (m^3/mg C/d)
+      xqcp: 1.0                                           # threshold for phosphorus limitation (relative to Redfield ratio) (-)
+      xqcn: 1.0                                           # threshold for nitrogen limitation (relative to Redfield ratio) (-)
+      xqp: 2.0                                            # maximum phosphorus to carbon ratio (relative to Redfield ratio) (-)
+      xqn: 1.08                                           # maximum nitrogen to carbon ratio (relative to Redfield ratio) (-)
+      qun2: 0.12                                         # nitrite affinity (m^3/mg C/d)
+      qun3: 0.12                                         # nitrate affinity (m^3/mg C/d)
+      qun4: 0.12                                         # ammonium affinity (m^3/mg C/d)
+      qurp: 0.12                                         # phosphate affinity (m^3/mg C/d)
+      snplux: 1.0                                         # specific tendency of luxury uptake of nutrients towards maximum quota (1/d), default = 1.0
+      use_Si: false                                       # use silicate, default = false
+      sdo: 0.04                                           # 1.1 of minimal specific lysis rate (1/d)
+      alpha: 0.7                                          # initial slope of PI-curve (mg C m^2/mg Chl/W/d)
+      beta: 0.01                                           # photoinhibition parameter (mg C m^2/mg Chl/W/d)
+      phim: 0.015                                         # maximum effective chlorophyll to carbon photosynthesis ratio (mg Chl/mg C)
+      Limnut: 1                                           # nitrogen-phosphorus colimitation formulation (0: geometric mean, 1: minimum, 2: harmonic mean)
+      docdyn: true                                        # use dynamic ratio of labile to semi-labile DOM production, default = false
+      uB1c_O2: 0.11                                       # oxygen produced per unit of carbon fixed (mmol O_2/mg C)
+      urB1_O2: 0.1                                        # oxygen consumed per unit of carbon respired (mmol O_2/mg C)
+      c0: 0.001                                           # background carbon concentration (mg C/m^3), default = 0.0
+      calcify: false                                      # calcify, default = false
+      resm: 0.0                                           # maximum nutrient-limitation-induced sinking velocity (m/d), default = 0.0
+      esni: 0.7                                           # level of nutrient limitation below which sinking commences (-)
+      cenh: false                                         # enable atmospheric CO2 influence on photosynthesis, default = false
+      EPS: 0.0004                                         # specific shortwave attenuation (m^2/mg C)
+      ndeposition: 0                                      # number of target pools for sedimentation, default = 1
+    initialization:
+      c: 0.0001                                           # carbon (mg C/m^3)
+      n: 0.0001                                           # nitrogen (mmol N/m^3)
+      p: 0.0001                                           # phosphorus (mmol P/m^3)
+      f: 0.0001                                           # iron (umol Fe/m^3)
+      Chl: 0.3                                            # chlorophyll a (mg/m^3)
+    coupling:
+      RP: R4
+      N1p: N1/p                                           # phosphate (mmol P/m^3)
+      N2n: N2/n                                           # nitrite (mmol N/m^3)
+      N3n: N3/n                                           # nitrate (mmol N/m^3)
+      N4n: N4/n                                           # ammonium (mmol N/m^3)
+      F2f: F2/f                                           # bivalent iron (mmol Fe/m^3)
+      F3f: F3/f                                           # trivalent iron (mmol Fe/m^3)
+      R1c: R1/c                                           # dissolved organic carbon (mg C/m^3)
+      R1p: R1/p                                           # dissolved organic phosphorus (mmol P/m^3)
+      R1n: R1/n                                           # dissolved organic nitrogen (mmol N/m^3)
+      R2c: R2/c                                           # semi-labile dissolved organic carbon (mg C/m^3)
+      O2o: O2/o                                           # oxygen (mmol O_2/m^3)
+      O3c: O3/c                                           # carbon dioxide (mmol C/m^3)
+  P3:
+    long_name: picophytoplankton
+    model: ersem/primary_producer_redox
+    parameters:
+      sum: 3.0                                            # maximum specific productivity at reference temperature (1/d)
+      q10: 2.0                                            # Q_10 temperature coefficient (-)
+      srs: 0.045                                          # specific rest respiration at reference temperature (1/d)
+      pu_ea: 0.2                                          # excreted fraction of primary production (-)
+      pu_ra: 0.2                                          # respired fraction of primary production (-)
+      qnlc: 0.006                                         # minimum nitrogen to carbon ratio (mmol N/mg C)
+      qplc: 0.00035                                       # minimum phosphorus to carbon ratio (mmol P/mg C)
+      qflc: 1.50E-07                                      # minimum iron to carbon ratio (umol Fe/mg C)
+      qfRc: 5.00E-07                                      # maximum/optimal iron to carbon ratio (umol Fe/mg C)
+      qurf: 6.00E-04                                      # specific affinity for iron (m^3/mg C/d)
+      xqcp: 1.0                                           # threshold for phosphorus limitation (relative to Redfield ratio) (-)
+      xqcn: 1.0                                           # threshold for nitrogen limitation (relative to Redfield ratio) (-)
+      xqp: 1.5                                            # maximum phosphorus to carbon ratio (relative to Redfield ratio) (-)
+      xqn: 1.05                                           # maximum nitrogen to carbon ratio (relative to Redfield ratio) (-)
+      qun2: 0.05                                           # nitrite affinity (m^3/mg C/d)
+      qun3: 0.05                                           # nitrate affinity (m^3/mg C/d)
+      qun4: 0.05                                           # ammonium affinity (m^3/mg C/d)
+      qurp: 0.05                                           # phosphate affinity (m^3/mg C/d)
+      snplux: 1.0                                         # specific tendency of luxury uptake of nutrients towards maximum quota (1/d), default = 1.0
+      use_Si: false                                       # use silicate, default = false
+      sdo: 0.035                                          # 1.1 of minimal specific lysis rate (1/d)
+      alpha: 0.8                                          # initial slope of PI-curve (mg C m^2/mg Chl/W/d)
+      beta: 0.015                                          # photoinhibition parameter (mg C m^2/mg Chl/W/d)
+      phim: 0.015                                         # maximum effective chlorophyll to carbon photosynthesis ratio (mg Chl/mg C)
+      Limnut: 1                                           # nitrogen-phosphorus colimitation formulation (0: geometric mean, 1: minimum, 2: harmonic mean)
+      docdyn: true                                        # use dynamic ratio of labile to semi-labile DOM production, default = false
+      uB1c_O2: 0.11                                       # oxygen produced per unit of carbon fixed (mmol O_2/mg C)
+      urB1_O2: 0.1                                        # oxygen consumed per unit of carbon respired (mmol O_2/mg C)
+      iopABS: 0.023                                       # specific shortwave absorption (m^2/mg Chl), default = 0.008
+      iopBBS: 0.003                                       # specific shortwave backscatter (m^2/mg Chl), default = 0.003
+      c0: 0.0088                                          # background carbon concentration (mg C/m^3), default = 0.0
+      resm: 0.0                                           # maximum nutrient-limitation-induced sinking velocity (m/d), default = 0.0
+      esni: 0.7                                           # level of nutrient limitation below which sinking commences (-)
+      cenh: false                                         # enable atmospheric CO2 influence on photosynthesis, default = false
+      EPS: 0.0004                                         # specific shortwave attenuation (m^2/mg C)
+      ndeposition: 0                                      # number of target pools for sedimentation, default = 1
+    initialization:
+      c: 0.0001                                           # carbon (mg C/m^3)
+      n: 0.0001                                           # nitrogen (mmol N/m^3)
+      p: 0.0001                                           # phosphorus (mmol P/m^3)
+      f: 0.0001                                           # iron (mg/m^3)
+      Chl: 0.0001                                         # chlorophyll a (mg/m^3)
+    coupling:
+      RP: R4
+      N1p: N1/p                                           # phosphate (mmol P/m^3)
+      N2n: N2/n                                           # nitrite (mmol N/m^3)
+      N3n: N3/n                                           # nitrate (mmol N/m^3)
+      N4n: N4/n                                           # ammonium (mmol N/m^3)
+      F2f: F2/f                                           # bivalent iron (mmol Fe/m^3)
+      F3f: F3/f                                           # trivalent iron (mmol Fe/m^3)
+      R1c: R1/c                                           # dissolved organic carbon (mg C/m^3)
+      R1p: R1/p                                           # dissolved organic phosphorus (mmol P/m^3)
+      R1n: R1/n                                           # dissolved organic nitrogen (mmol N/m^3)
+      R2c: R2/c                                           # semi-labile dissolved organic carbon (mg C/m^3)
+      O2o: O2/o                                           # oxygen (mmol O_2/m^3)
+      O3c: O3/c                                           # carbon dioxide (mmol C/m^3)
+  P4:
+    long_name: microphytoplankton
+    model: ersem/primary_producer_redox
+    parameters:
+      sum: 1.4                                            # maximum specific productivity at reference temperature (1/d)
+      q10: 2.0                                            # Q_10 temperature coefficient (-)
+      srs: 0.035                                          # specific rest respiration at reference temperature (1/d)
+      pu_ea: 0.2                                          # excreted fraction of primary production (-)
+      pu_ra: 0.2                                          # respired fraction of primary production (-)
+      qnlc: 0.0042                                        # minimum nitrogen to carbon ratio (mmol N/mg C)
+      qplc: 0.0001                                        # minimum phosphorus to carbon ratio (mmol P/mg C)
+      qflc: 5.00E-08                                      # minimum iron to carbon ratio (mmol Fe/mg C)
+      qfRc: 5.00E-07                                      # maximum/optimal iron to carbon ratio (mmol Fe/mg C)
+      qurf: 2.00E-04                                      # specific affinity for iron (m^3/mg C/d)
+      xqcp: 1.0                                           # threshold for phosphorus limitation (relative to Redfield ratio) (-)
+      xqcn: 1.0                                           # threshold for nitrogen limitation (relative to Redfield ratio) (-)
+      xqp: 2.7                                            # maximum phosphorus to carbon ratio (relative to Redfield ratio) (-)
+      xqn: 1.1                                            # maximum nitrogen to carbon ratio (relative to Redfield ratio) (-)
+      qun2: 0.025                                         # nitrite affinity (m^3/mg C/d)
+      qun3: 0.025                                         # nitrate affinity (m^3/mg C/d)
+      qun4: 0.025                                         # ammonium affinity (m^3/mg C/d)
+      qurp: 0.025                                         # phosphate affinity (m^3/mg C/d)
+      snplux: 1.0                                         # specific tendency of luxury uptake of nutrients towards maximum quota (1/d), default = 1.0
+      use_Si: false                                       # use silicate, default = false
+      sdo: 0.05                                           # 1.1 of minimal specific lysis rate (1/d)
+      alpha: 1.3                                          # initial slope of PI-curve (mg C m^2/mg Chl/W/d)
+      beta: 0.03                                          # photoinhibition parameter (mg C m^2/mg Chl/W/d)
+      phim: 0.045                                         # maximum effective chlorophyll to carbon photosynthesis ratio (mg Chl/mg C)
+      Limnut: 1                                           # nitrogen-phosphorus colimitation formulation (0: geometric mean, 1: minimum, 2: harmonic mean)
+      docdyn: true                                        # use dynamic ratio of labile to semi-labile DOM production, default = false
+      uB1c_O2: 0.11                                       # oxygen produced per unit of carbon fixed (mmol O_2/mg C)
+      urB1_O2: 0.1                                        # oxygen consumed per unit of carbon respired (mmol O_2/mg C)
+      c0: 0.0001                                          # background carbon concentration (mg C/m^3), default = 0.0
+      resm: 5.0                                           # maximum nutrient-limitation-induced sinking velocity (m/d), default = 0.0
+      esni: 0.5                                           # level of nutrient limitation below which sinking commences (-)
+      cenh: false                                         # enable atmospheric CO2 influence on photosynthesis, default = false
+      EPS: 0.0004                                         # specific shortwave attenuation (m^2/mg C)
+      ndeposition: 0                                      # number of target pools for sedimentation, default = 1
+    initialization:
+      c: 0.0001                                           # carbon (mg C/m^3)
+      n: 0.0001                                           # nitrogen (mmol N/m^3)
+      p: 0.0001                                           # phosphorus (mmol P/m^3)
+      f: 0.0001                                           # iron (mg/m^3)
+      Chl: 0.0001                                         # chlorophyll a (mg/m^3)
+    coupling:
+      RP: R6
+      N1p: N1/p                                           # phosphate (mmol P/m^3)
+      N2n: N2/n                                           # nitrite (mmol N/m^3)
+      N3n: N3/n                                           # nitrate (mmol N/m^3)
+      N4n: N4/n                                           # ammonium (mmol N/m^3)
+      F2f: F2/f                                           # bivalent iron (mmol Fe/m^3)
+      F3f: F3/f                                           # trivalent iron (mmol Fe/m^3)
+      R1c: R1/c                                           # dissolved organic carbon (mg C/m^3)
+      R1p: R1/p                                           # dissolved organic phosphorus (mmol P/m^3)
+      R1n: R1/n                                           # dissolved organic nitrogen (mmol N/m^3)
+      R2c: R2/c                                           # semi-labile dissolved organic carbon (mg C/m^3)
+      O2o: O2/o                                           # oxygen (mmol O_2/m^3)
+      O3c: O3/c                                           # carbon dioxide (mmol C/m^3)
+  Z3:
+    long_name: gelatinous_carnivores
+    model: ersem/mesozooplankton
+    parameters:
+      q10: 2.0                                            # Q_10 temperature coefficient (-)
+      minfood: 10.0                                       # Michaelis-Menten constant to perceive food (mg C/m^3)
+      chuc: 15.0                                          # Michaelis-Menten constant for food uptake (mg C/m^3)
+      sum: 0.5                                            # maximum specific uptake at reference temperature (1/d)
+      pu: 0.6                                             # assimilation efficiency (-)
+      pu_ea: 0.5                                          # fraction of unassimilated prey that is excreted (not respired) (-)
+      pu_eaR: 0.9                                         # fraction of unassimilated detritus that is excreted (not respired) (-)
+      pe_R1: 0.5                                          # dissolved fraction of excreted/dying matter (-)
+      srs: 0.015                                          # specific rest respiration at reference temperature (1/d)
+      sd: 0.05                                            # basal mortality (1/d)
+      sdo: 0.1                                            # maximum mortality due to oxygen limitation (1/d)
+      chro: 7.81                                          # Michaelis-Menten constant for oxygen limitation (-)
+      qpc: 0.000786                                       # phosphorus to carbon ratio (mmol P/mg C)
+      qnc: 0.0126                                         # nitrogen to carbon ratio (mmol N/mg C)
+      Minprey: 180.0                                      # food threshold for overwintering state (mg C/m^2)
+      repw: 0.0025                                        # specific overwintering respiration (1/d)
+      mort: 0.0025                                        # specific overwintering mortality (1/d)
+      R1R2: 1.0                                           # labile fraction of produced dissolved organic carbon (-)
+      xR1p: 1.2                                           # transfer of phosphorus to DOM, relative to POM (-), default = 0.0
+      xR1n: 1.0                                           # transfer of nitrogen to DOM, relative to POM (-), default = 0.0
+      urB1_O2: 0.1                                        # oxygen consumed per carbon respired (mmol O_2/mg C)
+      gutdiss: 0.5                                        # fraction of prey calcite that dissolves after ingestion (-)
+      c0: 0.0033                                          # background concentration (mg C/m^3)
+      nprey: 4                                            # number of prey types, default = 0
+      suprey1: 0.1                                       # relative affinity for prey type 1 (-)
+      suprey2: 0.5                                       # relative affinity for prey type 2 (-)
+      suprey3: 0.5                                        # relative affinity for prey type 3 (-)
+      suprey4: 0.5                                        # relative affinity for prey type 4 (-)
+    initialization:
+      c: 0.0001                                              # carbon (mg C/m^3)
+    coupling:
+      prey1: Z3
+      prey2: Z4
+      prey3: Z5
+      prey4: Z6
+      RP: R8
+      N1p: N1/p                                           # phosphate (mmol P/m^3)
+      N4n: N4/n                                           # ammonium (mmol N/m^3)
+      R1c: R1/c                                           # dissolved organic carbon (mg C/m^3)
+      R1p: R1/p                                           # dissolved organic phosphorus (mmol P/m^3)
+      R1n: R1/n                                           # dissolved organic nitrogen (mmol N/m^3)
+      R2c: R2/c                                           # semi-labile dissolved organic carbon (mg C/m^3)
+      O2o: O2/o                                           # oxygen source (mmol O_2/m^3)
+      O3c: O3/c                                           # carbon dioxide sink (mmol C/m^3)
+  Z4:
+    long_name: mesozooplankton
+    model: ersem/mesozooplankton
+    parameters:
+      q10: 2.0                                            # Q_10 temperature coefficient (-)
+      minfood: 8.0                                       # Michaelis-Menten constant to perceive food (mg C/m^3)
+      chuc: 10.0                                          # Michaelis-Menten constant for food uptake (mg C/m^3)
+      sum: 1.1                                            # maximum specific uptake at reference temperature (1/d)
+      pu: 0.6                                             # assimilation efficiency (-)
+      pu_ea: 0.5                                          # fraction of unassimilated prey that is excreted (not respired) (-)
+      pu_eaR: 0.9                                         # fraction of unassimilated detritus that is excreted (not respired) (-)
+      pe_R1: 0.5                                          # dissolved fraction of excreted/dying matter (-)
+      srs: 0.015                                          # specific rest respiration at reference temperature (1/d)
+      sd: 0.05                                            # basal mortality (1/d)
+      sdo: 0.1                                            # maximum mortality due to oxygen limitation (1/d)
+      chro: 7.81                                          # Michaelis-Menten constant for oxygen limitation (-)
+      qpc: 0.000786                                       # phosphorus to carbon ratio (mmol P/mg C)
+      qnc: 0.0126                                         # nitrogen to carbon ratio (mmol N/mg C)
+      Minprey: 180.0                                      # food threshold for overwintering state (mg C/m^2)
+      repw: 0.0025                                        # specific overwintering respiration (1/d)
+      mort: 0.0025                                        # specific overwintering mortality (1/d)
+      R1R2: 1.0                                           # labile fraction of produced dissolved organic carbon (-)
+      xR1p: 1.2                                           # transfer of phosphorus to DOM, relative to POM (-), default = 0.0
+      xR1n: 1.0                                           # transfer of nitrogen to DOM, relative to POM (-), default = 0.0
+      urB1_O2: 0.1                                        # oxygen consumed per carbon respired (mmol O_2/mg C)
+      gutdiss: 0.5                                        # fraction of prey calcite that dissolves after ingestion (-)
+      c0: 0.0033                                          # background concentration (mg C/m^3)
+      nprey: 9                                            # number of prey types, default = 0
+      suprey1: 0.15                                       # relative affinity for prey type 1 (-)
+      suprey2: 0.05                                       # relative affinity for prey type 2 (-)
+      suprey3: 0.0                                        # relative affinity for prey type 3 (-)
+      suprey4: 0.10                                       # relative affinity for prey type 4 (-)
+      suprey5: 0.10                                       # relative affinity for prey type 5 (-)
+      suprey6: 0.5                                       # relative affinity for prey type 6 (-)
+      suprey7: 0.25                                       # relative affinity for prey type 7 (-)
+      suprey8: 0.0                                        # relative affinity for prey type 8 (-)
+      suprey9: 0.1                                        # relative affinity for prey type 9 (-)
+      prey9ispom: true                                    # prey type 9 is detritus, default = false
+    initialization:
+      c: 0.0001                                              # carbon (mg C/m^3)
+    coupling:
+      prey1: P1
+      prey2: P2
+      prey3: P3
+      prey4: P4
+      prey5: Z4
+      prey6: Z5
+      prey7: Z6
+      prey8: B1
+      prey9: R6
+      RP: R8
+      N1p: N1/p                                           # phosphate (mmol P/m^3)
+      N4n: N4/n                                           # ammonium (mmol N/m^3)
+      R1c: R1/c                                           # dissolved organic carbon (mg C/m^3)
+      R1p: R1/p                                           # dissolved organic phosphorus (mmol P/m^3)
+      R1n: R1/n                                           # dissolved organic nitrogen (mmol N/m^3)
+      R2c: R2/c                                           # semi-labile dissolved organic carbon (mg C/m^3)
+      O2o: O2/o                                           # oxygen source (mmol O_2/m^3)
+      O3c: O3/c                                           # carbon dioxide sink (mmol C/m^3)
+  Z5:
+    long_name: microzooplankton
+    model: ersem/microzooplankton
+    parameters:
+      q10: 2.0                                            # Q_10 temperature coefficient (-)
+      minfood: 8.0                                        # Michaelis-Menten constant to perceive food (mg C/m^3)
+      chuc: 12.0                                          # Michaelis-Menten constant for food uptake (mg C/m^3)
+      sum: 1.8                                            # maximum specific uptake at reference temperature (1/d)
+      pu: 0.5                                             # assimilation efficiency (-)
+      pu_ea: 0.5                                          # fraction of unassimilated prey that is excreted (not respired) (-)
+      pe_R1: 0.5                                          # dissolved fraction of excreted/dying matter (-)
+      srs: 0.02                                           # specific rest respiration at reference temperature (1/d)
+      sd: 0.05                                            # basal mortality (1/d)
+      sdo: 0.25                                           # maximum mortality due to oxygen limitation (1/d)
+      chro: 7.81                                          # Michaelis-Menten constant for oxygen limitation (-)
+      qpc: 0.001                                          # maximum phosphorus to carbon ratio (mmol P/mg C)
+      qnc: 0.0167                                         # maximum nitrogen to carbon ratio (mmol N/mg C)
+      stempp: 0.5                                         # specific excretion rate of excess phosphorus (1/d)
+      stempn: 0.5                                         # specific excretion rate of excess nitrogen (1/d)
+      R1R2: 1.0                                           # labile fraction of produced dissolved organic carbon (-)
+      xR1p: 1.2                                           # transfer of phosphorus to DOM, relative to POM (-), default = 1.0
+      xR1n: 1.0                                           # transfer of nitrogen to DOM, relative to POM (-), default = 1.0
+      urB1_O2: 0.1                                        # oxygen consumed per carbon respired (mmol O_2/mg C)
+      gutdiss: 0.5                                        # fraction of prey calcite that dissolves after ingestion (-)
+      c0: 0.0033                                          # background concentration (mg C/m^3)
+      nprey: 7                                            # number of prey types, default = 0
+      suprey1: 0.0                                        # relative affinity for prey type 1 (-)
+      suprey2: 0.2                                        # relative affinity for prey type 2 (-)
+      suprey3: 0.2                                       # relative affinity for prey type 3 (-)
+      suprey4: 0.15                                       # relative affinity for prey type 4 (-)
+      suprey5: 0.15                                        # relative affinity for prey type 5 (-)
+      suprey6: 0.1                                        # relative affinity for prey type 6 (-)
+      suprey7: 0.15                                        # relative affinity for prey type 7 (-)
+    initialization:
+      c: 0.0001                                              # carbon (mg C/m^3)
+      n: 0.0001                                             # nitrogen (mmol N/m^3)
+      p: 0.0001                                           # phosphorus (mmol P/m^3)
+    coupling:
+      prey1: B1
+      prey2: P1
+      prey3: P2
+      prey4: P3
+      prey5: P4
+      prey6: Z5
+      prey7: Z6
+      RP: R6
+      N1p: N1/p                                           # phosphate (mmol P/m^3)
+      N4n: N4/n                                           # ammonium (mmol N/m^3)
+      R1c: R1/c                                           # dissolved organic carbon (mg C/m^3)
+      R1p: R1/p                                           # dissolved organic phosphorus (mmol P/m^3)
+      R1n: R1/n                                           # dissolved organic nitrogen (mmol N/m^3)
+      R2c: R2/c                                           # semi-labile dissolved organic carbon (mg C/m^3)
+      O2o: O2/o                                           # oxygen source (mmol O_2/m^3)
+      O3c: O3/c                                           # carbon dioxide sink (mmol C/m^3)
+  Z6:
+    long_name: nanoflagellates
+    model: ersem/microzooplankton
+    parameters:
+      q10: 2.0                                            # Q_10 temperature coefficient (-)
+      minfood: 30.0                                       # Michaelis-Menten constant to perceive food (mg C/m^3)
+      chuc: 10.0                                          # Michaelis-Menten constant for food uptake (mg C/m^3)
+      sum: 1.5                                            # maximum specific uptake at reference temperature (1/d)
+      pu: 0.4                                             # assimilation efficiency (-)
+      pu_ea: 0.5                                          # fraction of unassimilated prey that is excreted (not respired) (-)
+      pe_R1: 0.5                                          # dissolved fraction of excreted/dying matter (-)
+      srs: 0.025                                          # specific rest respiration at reference temperature (1/d)
+      sd: 0.05                                            # basal mortality (1/d)
+      sdo: 0.3                                            # maximum mortality due to oxygen limitation (1/d)
+      chro: 7.81                                          # Michaelis-Menten constant for oxygen limitation (-)
+      qpc: 0.001                                          # maximum phosphorus to carbon ratio (mmol P/mg C)
+      qnc: 0.0167                                         # maximum nitrogen to carbon ratio (mmol N/mg C)
+      stempp: 0.5                                         # specific excretion rate of excess phosphorus (1/d)
+      stempn: 0.5                                         # specific excretion rate of excess nitrogen (1/d)
+      R1R2: 1.0                                           # labile fraction of produced dissolved organic carbon (-)
+      xR1p: 1.2                                           # transfer of phosphorus to DOM, relative to POM (-), default = 1.0
+      xR1n: 1.0                                           # transfer of nitrogen to DOM, relative to POM (-), default = 1.0
+      urB1_O2: 0.1                                        # oxygen consumed per carbon respired (mmol O_2/mg C)
+      gutdiss: 0.5                                        # fraction of prey calcite that dissolves after ingestion (-)
+      c0: 0.0033                                          # background concentration (mg C/m^3)
+      nprey: 5                                            # number of prey types, default = 0
+      suprey1: 0.45                                       # relative affinity for prey type 1 (-)
+      suprey2: 0.15                                       # relative affinity for prey type 2 (-)
+      suprey3: 0.25                                       # relative affinity for prey type 3 (-)
+      suprey4: 0.15                                       # relative affinity for prey type 4 (-)
+      suprey5: 0.45                                       # relative affinity for prey type 4 (-)
+    initialization:
+      c: 0.0001                                            # carbon (mg C/m^3)
+      n: 0.0001                                           # nitrogen (mmol N/m^3)
+      p: 0.0001                                            # phosphorus (mmol P/m^3)
+    coupling:
+      prey1: B1
+      prey2: P2
+      prey3: P3
+      prey4: Z6
+      prey5: B2
+      RP: R4
+      N1p: N1/p                                           # phosphate (mmol P/m^3)
+      N4n: N4/n                                           # ammonium (mmol N/m^3)
+      R1c: R1/c                                           # dissolved organic carbon (mg C/m^3)
+      R1p: R1/p                                           # dissolved organic phosphorus (mmol P/m^3)
+      R1n: R1/n                                           # dissolved organic nitrogen (mmol N/m^3)
+      R2c: R2/c                                           # semi-labile dissolved organic carbon (mg C/m^3)
+      RPs: R6/s                                           # particulate organic silicate (mmol Si/m^3)
+      O2o: O2/o                                           # oxygen source (mmol O_2/m^3)
+      O3c: O3/c                                           # carbon dioxide sink (mmol C/m^3)
+  no3_surface_flux:
+     model: external_surface_flux
+     coupling:
+        target : N3/n
+  po4_surface_flux:
+     model: external_surface_flux
+     coupling:
+        target : N1/p
+  si_surface_flux:
+     model: external_surface_flux
+     coupling:
+        target : N5/s
+  fe_surface_flux:
+     model: external_surface_flux
+     coupling:
+        target : F3/f
+  mn_surface_flux:
+     model: external_surface_flux
+     coupling:
+        target : M4/m
