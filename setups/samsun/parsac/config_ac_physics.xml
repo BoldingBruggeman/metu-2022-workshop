@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../client/config.xsd">
+  <transports>
+    <transport type="sqlite" path="samsun_ac.db"/>
+  </transports>
+  <executable path="/home/kb/.local/bin/gotm"/>
+  <setup path="../"/>
+  <parameters>
+    <parameter file="gotm.yaml" variable="turbulence/turb_param/k_min" minimum="1e-9" maximum="1e-4" logscale="True" />
+    <parameter file="gotm.yaml" variable="light_extinction/g1/constant_value" minimum="0.1" maximum="1.5" />
+    <parameter file="gotm.yaml" variable="light_extinction/g2/constant_value" minimum="1." maximum="30." />
+  </parameters>
+  <observations>
+    <variable source="./sst.obs" modelpath="result.nc" modelvariable="temp" spinupyears="0"/>
+    <!--variable source="./temp.obs" modelpath="result.nc" modelvariable="temp" spinupyears="0"/-->
+    <!--variable source="./salt.obs" modelpath="result.nc" modelvariable="salt" spinupyears="0"/-->
+  </observations>
+  <extra_outputs>
+    <statistic name="correlation" expression="corrcoef(x,y)[0,1]"/>
+    <statistic name="rmse" expression="sqrt(mean((y-x)**2))"/>
+  </extra_outputs>
+</config>
